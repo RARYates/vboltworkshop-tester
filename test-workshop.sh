@@ -24,7 +24,7 @@ if ! [ -f "./student.pem" ]; then
 fi
 
 # Test 1 - Bolt Commands
-echo "\n########## Performing Test 1 - Basic Bolt Commands ##########\n"
+echo -e "\n########## Performing Test 1 - Basic Bolt Commands ##########\n"
 sleep 1
 
 bolt command run 'ping 8.8.8.8 -c2' --targets $linuxsut --user centos --private-key $(pwd)/student.pem --transport ssh --no-host-key-check
@@ -32,7 +32,7 @@ bolt command run 'ping 8.8.8.8 -c2' --targets $linuxsut --user centos --private-
 bolt command run 'ping 8.8.8.8 -n 2' --targets $winsut --user Administrator --password Puppetlabs! --transport winrm --no-ssl
 
 # Test 2 - Bolt.yaml
-echo "\n########## Performing Test 2 - Bolt.yaml ##########\n"
+echo -e "\n########## Performing Test 2 - Bolt.yaml ##########\n"
 sleep 1
 
 cat <<- 'EOF' > Boltdir/bolt.yaml
@@ -49,7 +49,7 @@ bolt command run 'ping 8.8.8.8 -n 2' --targets $winsut --user Administrator --pa
 
 # Test 3 - Gather Inventory.yaml
 # Rather than sed and edit in place (Unix Style). We'll sed and move to support OSX's default POSIX-style Sed
-echo "\n########## Performing Test 3 - Inventory.yaml ##########\n"
+echo -e "\n########## Performing Test 3 - Inventory.yaml ##########\n"
 sleep 1
 
 wget "http://bit.ly/${hydraname}boltinventory" -O Boltdir/inventory_stage.yaml
@@ -57,7 +57,7 @@ sed 's/<X>/0/g' ./Boltdir/inventory_stage.yaml > Boltdir/inventory.yaml
 
 
 # Test 4 - Validate Inventory.yaml
-echo "\n########## Performing Test 4 - Inventory.yaml ##########\n"
+echo -e "\n########## Performing Test 4 - Inventory.yaml ##########\n"
 sleep 1
 
 bolt command run 'ping 8.8.8.8 -c2' --targets linux
@@ -65,14 +65,14 @@ bolt command run 'ping 8.8.8.8 -n 2' --targets windows
 bolt command run 'hostname' --targets linux,windows
 
 # Test 5 - Run a Script
-echo "\n########## Performing Test 5 - Script Runs ##########\n"
+echo -e "\n########## Performing Test 5 - Script Runs ##########\n"
 sleep 1
 
 wget "http://bit.ly/vbolttimesync" -O timesync.ps1
 bolt script run timesync.ps1 --targets windows
 
 # Test 6 - Transform Script into Task
-echo "\n########## Performing Test 6 - Task Run ##########\n"
+echo -e "\n########## Performing Test 6 - Task Run ##########\n"
 sleep 1
 
 mkdir -p Boltdir/site/tools/tasks
@@ -81,7 +81,7 @@ bolt task show
 bolt task run tools::timesync --targets windows
 
 # Test 7 - Parameterizing Tasks
-echo "\n########## Performing Test 7 - Parameterization ##########\n"
+echo -e "\n########## Performing Test 7 - Parameterization ##########\n"
 sleep 1
 
 wget "http://bit.ly/vbolttimesyncjson" -O Boltdir/site/tools/tasks/timesync.json
@@ -92,7 +92,7 @@ bolt task show tools::timesync
 bolt task run tools::timesync -t windows restart=true
 
 # Test 8 - Build a Plan
-echo "\n########## Performing Test 8 - Build a Plan ##########\n"
+echo -e "\n########## Performing Test 8 - Build a Plan ##########\n"
 sleep 1
 
 mkdir Boltdir/site/tools/plans
@@ -102,14 +102,14 @@ bolt plan show tools::timesync
 bolt plan run tools::timesync --targets windows
 
 # Test 9 - Apply Puppet Code
-echo "\n########## Performing Test 9 - Puppet Apply ---NOTE: THIS SHOULD FAIL--- ##########\n"
+echo -e "\n########## Performing Test 9 - Puppet Apply ---NOTE: THIS SHOULD FAIL--- ##########\n"
 sleep 1
 
 wget "http://bit.ly/timesyncmanifest" -O timesync_windows.pp
 bolt apply timesync_windows.pp --targets windows || ret=0
 
 # Test 10 - Dependencies
-echo "\n########## Performing Test 10 - Dependencies ##########\n"
+echo -e "\n########## Performing Test 10 - Dependencies ##########\n"
 sleep 1
 
 cat <<- 'EOF' > Boltdir/Puppetfile
@@ -123,7 +123,7 @@ bolt puppetfile install
 bolt apply timesync_windows.pp --targets windows
 
 # Test 11 - Cross Platform Design
-echo "\n########## Performing Test 1 - Multiplatform ##########\n"
+echo -e "\n########## Performing Test 1 - Multiplatform ##########\n"
 sleep 1
 
 wget "http://bit.ly/vboltmultiplatform" -O Boltdir/site/tools/plans/timesync_code.pp
