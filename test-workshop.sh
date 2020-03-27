@@ -123,7 +123,7 @@ bolt puppetfile install
 bolt apply timesync_windows.pp --targets windows
 
 # Test 11 - Cross Platform Design
-echo -e "\n########## Performing Test 1 - Multiplatform ##########\n"
+echo -e "\n########## Performing Test 11- Multiplatform ##########\n"
 sleep 1
 
 wget "http://bit.ly/vboltmultiplatform" -O Boltdir/site/tools/plans/timesync_code.pp
